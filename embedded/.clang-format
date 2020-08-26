@@ -1,0 +1,23 @@
+---
+BasedOnStyle: Chromium
+AccessModifierOffset: -4
+AlignConsecutiveMacros: true
+AlignConsecutiveAssignments: true
+AllowShortFunctionsOnASingleLine: None
+BinPackArguments: true
+BinPackParameters: true
+BreakBeforeBraces: Attach
+BreakConstructorInitializers: AfterColon
+ColumnLimit: 120
+IncludeBlocks: Regroup
+IncludeCategories:
+    - Regex: "<*"
+      Priority: 1
+    - Regex: ".*"
+      Priority: 2
+    - Regex: ".*"
+      Priority: 1
+IndentWidth: 4
+Language: Cpp
+NamespaceIndentation: All
+Standard: Latest
