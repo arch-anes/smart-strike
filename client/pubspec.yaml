@@ -30,6 +30,10 @@ dependencies:
 
     http: ^0.12.2
 
+    flutter_modular: ^2.0.0+1
+
+    localstorage: ^3.0.2+5
+
 dev_dependencies:
     flutter_test:
         sdk: flutter
