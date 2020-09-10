@@ -34,7 +34,8 @@
         "passport-oauth2-client-password": "^0.1.2",
         "reflect-metadata": "^0.1.13",
         "rimraf": "^3.0.2",
-        "rxjs": "^6.5.4"
+        "rxjs": "^6.5.4",
+        "uuid": "^8.3.0"
     },
     "devDependencies": {
         "@nestjs/cli": "^7.0.0",
@@ -47,6 +48,7 @@
         "@types/oauth2orize": "^1.8.8",
         "@types/passport-jwt": "^3.0.3",
         "@types/supertest": "^2.0.8",
+        "@types/uuid": "^8.3.0",
         "@typescript-eslint/eslint-plugin": "^2.23.0",
         "@typescript-eslint/parser": "^2.23.0",
         "eslint": "^6.8.0",
