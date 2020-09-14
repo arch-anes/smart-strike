@@ -1,6 +1,10 @@
 {
     "folders": [
         {
+            "name": "Smart Strike",
+            "path": "."
+        },
+        {
             "name": "Client",
             "path": "client"
         },
