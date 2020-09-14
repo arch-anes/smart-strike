@@ -1,0 +1,34 @@
+{
+    "folders": [
+        {
+            "name": "Embedded",
+            "path": "embedded"
+        }
+    ],
+    "settings": {
+        "prettier.configPath": ".prettierrc.yaml",
+        "editor.defaultFormatter": "esbenp.prettier-vscode",
+        "eslint.packageManager": "yarn",
+        "editor.codeActionsOnSave": {
+            "source.fixAll.eslint": true
+        },
+        "[javascript]": {
+            "editor.defaultFormatter": "esbenp.prettier-vscode"
+        },
+        "[jsonc]": {
+            "editor.defaultFormatter": "esbenp.prettier-vscode"
+        },
+        "[json]": {
+            "editor.defaultFormatter": "esbenp.prettier-vscode"
+        }
+    },
+    "extensions": {
+        "recommendations": [
+            "christian-kohler.path-intellisense",
+            "2gua.rainbow-brackets",
+            "esbenp.prettier-vscode",
+            "eamodio.gitlens",
+            "editorconfig.editorconfig"
+        ]
+    }
+}
