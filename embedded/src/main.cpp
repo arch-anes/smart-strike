@@ -1,12 +1,16 @@
 #include <Arduino.h>
+#include <ESP8266HTTPUpdateServer.h>
 #include <ESP8266WebServer.h>
 #include <ESP8266WiFi.h>
-#include <ESP8266mDNS.h>
 #include <WiFiClient.h>
 
-uint8_t strike_pin = D3;
+#define S(s)      #s
+#define STRING(s) S(s)
+
+uint8_t strike_pin = D2;
 
 ESP8266WebServer server(80);
+ESP8266HTTPUpdateServer httpUpdater;
 
 void handle_not_found() {
     String message = "File Not Found\n\n";
@@ -55,51 +59,52 @@ void handle_strike() {
     start_strike();
 }
 
-void configure_server() {
-    server.on("/", []() { server.send(200, "text/plain", "hello world"); });
+void connect_wifi() {
+    WiFi.mode(WIFI_STA);
+    WiFi.begin(STRING(WIFI_SSID), STRING(WIFI_PASS));
+    if (WiFi.waitForConnectResult() != WL_CONNECTED) {
+        Serial.println("WiFi Connect Failed! Rebooting...");
+        delay(1000);
+        ESP.restart();
+    }
 
-    server.on("/strike", []() {
-        server.send(200, "text/plain", "struck");
+    Serial.println("");
+    Serial.print("Connected to ");
+    Serial.println(STRING(WIFI_SSID));
+    Serial.print("IP address: ");
+    Serial.println(WiFi.localIP());
+}
+
+void configure_server() {
+    httpUpdater.setup(&server, "/update", STRING(OTA_USER), STRING(OTA_PASS));
+
+    server.on("/", HTTP_POST, []() {
+        if (!server.authenticate(STRING(DEVICE_USER), STRING(DEVICE_PASS))) {
+            return server.requestAuthentication();
+        }
+
         handle_strike();
+        server.send(200);
     });
 
     server.onNotFound(handle_not_found);
-}
-
-void setup() {
-    pinMode(strike_pin, OUTPUT);
-
-    stop_strike();
-
-    setup_strike_timeout();
-
-    Serial.begin(115200);
-    WiFi.mode(WIFI_STA);
-    WiFi.begin(WIFI_SSID, WIFI_PASS);
-    Serial.println("");
-
-    // Wait for connection
-    while (WiFi.status() != WL_CONNECTED) {
-        delay(500);
-        Serial.print(".");
-    }
-    Serial.println("");
-    Serial.print("Connected to ");
-    Serial.println(WIFI_SSID);
-    Serial.print("IP address: ");
-    Serial.println(WiFi.localIP());
-
-    if (MDNS.begin("esp8266")) {
-        Serial.println("MDNS responder started");
-    }
-
-    configure_server();
 
     server.begin();
     Serial.println("HTTP server started");
 }
 
+void setup() {
+    Serial.begin(115200);
+
+    connect_wifi();
+
+    pinMode(strike_pin, OUTPUT);
+    stop_strike();
+    setup_strike_timeout();
+
+    configure_server();
+}
+
 void loop() {
     server.handleClient();
-    MDNS.update();
 }
