@@ -1,6 +1,10 @@
 {
     "folders": [
         {
+            "name": "Client",
+            "path": "client"
+        },
+        {
             "name": "Embedded",
             "path": "embedded"
         }
