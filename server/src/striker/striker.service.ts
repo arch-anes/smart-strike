@@ -2,25 +2,25 @@ import { Injectable, HttpService } from '@nestjs/common';
 
 @Injectable()
 export class StrikerService {
-    device_hostname = process.env.DEVICE_HOST;
-    device_username = process.env.DEVICE_USER;
-    device_password = process.env.DEVICE_PASS;
+    deviceAuth = {} as { host: string; user: string; pass: string };
 
     constructor(private httpService: HttpService) {
-        if (this.device_hostname === undefined) throw new Error('Undefined device hostname');
-        if (this.device_username === undefined) throw new Error('Undefined device username');
-        if (this.device_password === undefined) throw new Error('Undefined device password');
+        try {
+            this.deviceAuth = JSON.parse(process.env.DEVICE_AUTH);
+        } catch (e) {
+            throw new Error('Undefined device authentication information');
+        }
     }
 
     strike() {
         return this.httpService
             .post(
-                `http://${this.device_hostname}`,
+                `http://${this.deviceAuth.host}`,
                 {},
                 {
                     auth: {
-                        username: this.device_username,
-                        password: this.device_password,
+                        username: this.deviceAuth.user,
+                        password: this.deviceAuth.pass,
                     },
                 },
             )
