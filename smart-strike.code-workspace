@@ -37,7 +37,6 @@
     "extensions": {
         "recommendations": [
             "christian-kohler.path-intellisense",
-            "2gua.rainbow-brackets",
             "esbenp.prettier-vscode",
             "eamodio.gitlens",
             "editorconfig.editorconfig"
