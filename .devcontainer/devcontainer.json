@@ -1,0 +1,33 @@
+{
+  "name": "Smart Strike devcontainer",
+  "dockerFile": "./Dockerfile",
+	"runArgs": [
+    "--env-file",
+    ".devcontainer/.env",
+		"--cap-add=SYS_PTRACE",
+		"--security-opt",
+		"seccomp=unconfined",
+		"--privileged",
+		"--volume",
+		"/dev/bus/usb:/dev/bus/usb"
+	],
+  "extensions": [
+	"dart-code.dart-code",
+	"dart-code.flutter",
+	"mads-hartmann.bash-ide-vscode",
+	"coenraads.bracket-pair-colorizer-2",
+	"ms-vscode.cpptools",
+	"xaver.clang-format",
+	"redhat.fabric8-analytics",
+	"ms-azuretools.vscode-docker",
+	"editorconfig.editorconfig",
+	"dbaeumer.vscode-eslint",
+	"eamodio.gitlens",
+	"shd101wyy.markdown-preview-enhanced",
+	"platformio.platformio-ide",
+	"esbenp.prettier-vscode",
+	"redhat.vscode-yaml",
+	"visualstudioexptteam.vscodeintellicode"
+],
+	"remoteUser": "vscode"
+}

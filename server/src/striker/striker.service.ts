@@ -6,6 +6,7 @@ export class StrikerService {
 
     constructor(private httpService: HttpService) {
         try {
+            console.log(this.deviceAuth);
             this.deviceAuth = JSON.parse(process.env.DEVICE_AUTH);
         } catch (e) {
             throw new Error('Undefined device authentication information');
