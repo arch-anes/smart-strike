@@ -50,7 +50,7 @@ RUN yes | sdkmanager \
 
 USER vscode
 
-ENV FLUTTER_VERSION 1.25.0-8.1.pre
+ENV FLUTTER_VERSION 2.0.0
 
 ENV FLUTTER_HOME /home/vscode/sdks/flutter
 ENV FLUTTER_ROOT $FLUTTER_HOME
@@ -60,8 +60,6 @@ ENV PATH ${PATH}:${FLUTTER_HOME}/bin:${FLUTTER_HOME}/bin/cache/dart-sdk/bin
 RUN git clone --branch ${FLUTTER_VERSION} https://github.com/flutter/flutter.git ${FLUTTER_HOME}
 
 RUN yes | flutter doctor --android-licenses && flutter doctor
-
-RUN flutter config --enable-web
 
 USER root
 
@@ -79,5 +77,3 @@ RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add - \
 RUN apt update \
   && apt install -y clang-format clang-tidy fish python3-pip \
   && apt-get autoremove -y && apt-get clean -y && rm -rf /var/lib/apt/lists/*
-
-RUN chsh -s `which fish` vscode
