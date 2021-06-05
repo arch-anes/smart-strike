@@ -50,7 +50,7 @@ RUN yes | sdkmanager \
 
 USER vscode
 
-ENV FLUTTER_VERSION 2.0.0
+ENV FLUTTER_VERSION 2.2.1
 
 ENV FLUTTER_HOME /home/vscode/sdks/flutter
 ENV FLUTTER_ROOT $FLUTTER_HOME
