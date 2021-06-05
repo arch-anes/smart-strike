@@ -45,13 +45,9 @@ class LoginService {
       _token = jsonResponse['token'];
       return true;
     } catch (e) {
-      disconnect();
+      _token = null;
       return false;
     }
-  }
-
-  disconnect() {
-    _token = null;
   }
 
   _refreshToken() async {
@@ -60,7 +56,7 @@ class LoginService {
       var jsonResponse = convert.jsonDecode(response.body);
       _token = jsonResponse['token'];
     } catch (e) {
-      disconnect();
+      isLoggedIn.value = false;
     }
   }
 }
