@@ -1,6 +1,7 @@
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:http/http.dart' as http;
 
+import 'helpers.dart';
 import 'login_service.dart';
 
 import 'env.dart';
@@ -12,8 +13,8 @@ class StrikeService {
 
   Future<bool> tryStrike() async {
     try {
-      await http.post(URL, headers: loginService.authHeaders);
-      return true;
+      var res = await http.post(URL, headers: loginService.authHeaders);
+      return isHttpSuccess(res.statusCode);
     } catch (e) {
       return false;
     }
