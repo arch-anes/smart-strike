@@ -9,9 +9,9 @@ import 'env.dart';
 class StrikeService {
   static final URL = Uri.parse('$SERVER_URL/striker');
 
-  final loginService = Modular.get<LoginService>();
-
   Future<bool> tryStrike() async {
+    final loginService = Modular.get<LoginService>();
+
     try {
       var res = await http.post(URL, headers: loginService.authHeaders);
       return isHttpSuccess(res.statusCode);

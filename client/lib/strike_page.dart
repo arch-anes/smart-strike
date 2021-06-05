@@ -5,10 +5,10 @@ import 'strike_service.dart';
 import 'timeout_button.dart';
 
 class StrikePage extends StatelessWidget {
-  final strikeService = Modular.get<StrikeService>();
-
   @override
   Widget build(BuildContext context) {
+    final strikeService = Modular.get<StrikeService>();
+
     return Material(
       color: Colors.white,
       child: Center(child: TimeoutButton(callback: strikeService.tryStrike)),

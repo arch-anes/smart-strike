@@ -30,7 +30,7 @@ dependencies:
 
     http: ^0.13.3
 
-    flutter_modular: ^2.0.0+1
+    flutter_modular: ^3.2.2+1
 
     localstorage: ^4.0.0+1
 

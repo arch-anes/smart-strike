@@ -6,10 +6,10 @@ import 'login_service.dart';
 import 'strike_page.dart';
 
 class AppWidget extends StatelessWidget {
-  final loginService = Modular.get<LoginService>();
-
   @override
   Widget build(BuildContext context) {
+    final loginService = Modular.get<LoginService>();
+
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(

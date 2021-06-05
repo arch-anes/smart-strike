@@ -4,13 +4,13 @@ import 'package:flutter_modular/flutter_modular.dart';
 import 'login_service.dart';
 
 class LoginPage extends StatelessWidget {
-  final loginService = Modular.get<LoginService>();
-
   final TextEditingController _passwordController = TextEditingController();
   final passwordError = ValueNotifier<String>(null);
 
   @override
   Widget build(BuildContext context) {
+    final loginService = Modular.get<LoginService>();
+
     return Padding(
         padding: EdgeInsets.all(10),
         child: ListView(children: <Widget>[
