@@ -7,7 +7,7 @@ import 'env.dart';
 
 class LoginService {
   static const TOKEN_KEY = "token";
-  static const URL = '$SERVER_URL/auth';
+  static final URL = Uri.parse('$SERVER_URL/auth');
 
   final localStorage = LocalStorage('login');
   final isLoggedIn = ValueNotifier(false);

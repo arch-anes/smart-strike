@@ -7,7 +7,7 @@ import 'login_service.dart';
 import 'env.dart';
 
 class StrikeService {
-  static const URL = '$SERVER_URL/striker';
+  static final URL = Uri.parse('$SERVER_URL/striker');
 
   final loginService = Modular.get<LoginService>();
 
