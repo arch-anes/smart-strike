@@ -2,6 +2,7 @@
 #include <ESP8266HTTPUpdateServer.h>
 #include <ESP8266WebServer.h>
 #include <ESP8266WiFi.h>
+#include <ESP8266mDNS.h>
 #include <WiFiClient.h>
 
 #define S(s)      #s
@@ -97,6 +98,8 @@ void setup() {
     Serial.begin(115200);
 
     connect_wifi();
+
+    MDNS.begin(STRING(DEVICE_NAME));
 
     pinMode(strike_pin, OUTPUT);
     stop_strike();
