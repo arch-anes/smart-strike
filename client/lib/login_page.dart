@@ -29,14 +29,16 @@ class LoginPage extends StatelessWidget {
               child: ValueListenableBuilder(
                   valueListenable: passwordError,
                   builder: (BuildContext context, String error, Widget child) =>
-                      TextField(
+                      AutofillGroup(
+                          child: TextField(
+                        autofillHints: const <String>[AutofillHints.password],
                         obscureText: true,
                         controller: _passwordController,
                         decoration: InputDecoration(
                             border: OutlineInputBorder(),
                             labelText: 'Password',
                             errorText: error),
-                      ))),
+                      )))),
           Container(
               height: 50,
               margin: EdgeInsets.fromLTRB(0, 10, 0, 0),
