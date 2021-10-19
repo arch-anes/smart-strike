@@ -99,7 +99,9 @@ void setup() {
 
     connect_wifi();
 
-    MDNS.begin(STRING(DEVICE_NAME));
+    if (!MDNS.begin(STRING(DEVICE_NAME))) {
+        Serial.println("Error setting up MDNS responder!");
+    }
 
     pinMode(strike_pin, OUTPUT);
     stop_strike();
