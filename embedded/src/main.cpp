@@ -149,6 +149,11 @@ void configure_server() {
         server.send(200);
     });
 
+    server.on("/restart", HTTP_POST, []() {
+        server.send(200);
+        ESP.restart();
+    });
+
     server.onNotFound(handle_not_found);
 
     server.begin();
