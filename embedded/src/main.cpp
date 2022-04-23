@@ -6,6 +6,7 @@
 #include <MQTT.h>
 #include <WiFiClient.h>
 #include <WiFiClientSecure.h>
+#include <limits>
 
 #define S(s)      #s
 #define STRING(s) S(s)
@@ -25,6 +26,8 @@ static const char IOT_CERT_PRIVATE[] PROGMEM = STRING(CERT_PRIVATE);
 const auto iotTrustedCA = BearSSL::X509List(IOT_CERT_CA);
 const auto iotCert      = BearSSL::X509List(IOT_CERT_CRT);
 const auto iotPrivKey   = BearSSL::PrivateKey(IOT_CERT_PRIVATE);
+
+String client_id;
 
 void handle_not_found() {
     String message = "File Not Found\n\n";
@@ -130,9 +133,10 @@ void setup_mqtt_client() {
     client.begin(STRING(ENDPOINT), 8883, net);
     client.onMessage(messageHandler);
 
-    Serial.println("Connecting to IoT server");
+    Serial.print("Connecting to IoT server with device id: ");
+    Serial.println(client_id);
     constexpr auto MAXIMUM_RETRIES = 10U;
-    for (auto i = 0U; !client.connect(STRING(DEVICE_NAME)) && i < MAXIMUM_RETRIES; ++i) {
+    for (auto i = 0U; !client.connect(client_id.c_str()) && i < MAXIMUM_RETRIES; ++i) {
         Serial.print(".");
         delay(100);
     }
@@ -142,7 +146,7 @@ void setup_mqtt_client() {
         return;
     }
 
-    client.subscribe(STRING(SUB_TOPIC));
+    client.subscribe(STRING(SUB_TOPIC), 1);
     Serial.println("IoT connected!");
 }
 
@@ -169,6 +173,11 @@ void setup_http_server() {
     Serial.println("HTTP server started");
 }
 
+void generate_client_id() {
+    const auto random_id = secureRandom(std::numeric_limits<long>::max());
+    client_id            = STRING(DEVICE_NAME) + String("-") + random_id;
+}
+
 void setup() {
     Serial.begin(115200);
 
@@ -183,6 +192,8 @@ void setup() {
     setup_strike_timeout();
 
     setup_http_server();
+
+    generate_client_id();
     setup_mqtt_client();
 }
 
