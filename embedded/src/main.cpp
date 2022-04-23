@@ -74,18 +74,23 @@ void handle_strike() {
 }
 
 void messageHandler(String& topic, String& payload) {
-    // Serial.println("incoming: " + topic + " - " + payload);
+    Serial.println("incoming: " + topic + " - " + payload);
     handle_strike();
 }
 
-void connect_wifi() {
-    WiFi.mode(WIFI_STA);
-    WiFi.begin(STRING(WIFI_SSID), STRING(WIFI_PASS));
+void check_wifi() {
     if (WiFi.waitForConnectResult() != WL_CONNECTED) {
         Serial.println("WiFi Connect Failed! Rebooting...");
         delay(1000);
         ESP.restart();
     }
+}
+
+void setup_wifi() {
+    WiFi.mode(WIFI_STA);
+    WiFi.begin(STRING(WIFI_SSID), STRING(WIFI_PASS));
+
+    check_wifi();
 
     Serial.println("");
     Serial.print("Connected to ");
@@ -95,7 +100,7 @@ void connect_wifi() {
 }
 
 // Set time via NTP, as required for x.509 validation
-void set_clock() {
+void setup_clock() {
     configTime(3 * 3600, 0, "pool.ntp.org", "time.nist.gov");
 
     Serial.print("Waiting for NTP time sync: ");
@@ -112,9 +117,13 @@ void set_clock() {
     Serial.print(asctime(&timeinfo));
 }
 
-void configure_mqtt() {
-    set_clock();
+void setup_mdns() {
+    if (!MDNS.begin(STRING(DEVICE_NAME))) {
+        Serial.println("Error setting up MDNS responder!");
+    }
+}
 
+void setup_mqtt_client() {
     net.setTrustAnchors(&iotTrustedCA);
     net.setClientRSACert(&iotCert, &iotPrivKey);
 
@@ -137,7 +146,7 @@ void configure_mqtt() {
     Serial.println("IoT connected!");
 }
 
-void configure_server() {
+void setup_http_server() {
     httpUpdater.setup(&server, "/update", STRING(OTA_USER), STRING(OTA_PASS));
 
     server.on("/", HTTP_POST, []() {
@@ -163,22 +172,28 @@ void configure_server() {
 void setup() {
     Serial.begin(115200);
 
-    connect_wifi();
+    setup_wifi();
 
-    if (!MDNS.begin(STRING(DEVICE_NAME))) {
-        Serial.println("Error setting up MDNS responder!");
-    }
+    setup_mdns();
+
+    setup_clock();
 
     pinMode(strike_pin, OUTPUT);
     stop_strike();
     setup_strike_timeout();
 
-    configure_server();
-    configure_mqtt();
+    setup_http_server();
+    setup_mqtt_client();
 }
 
 void loop() {
-    client.loop();
+    check_wifi();
+
+    if (!client.loop()) {
+        setup_mqtt_client();
+    }
+    delay(10);
+
     server.handleClient();
-    delay(250);
+    delay(10);
 }
