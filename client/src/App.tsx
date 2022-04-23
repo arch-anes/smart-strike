@@ -10,7 +10,7 @@ const idToken = new URLSearchParams(window.location.hash.substring(1)).get('id_t
 const authFQDN = 'smart-strike.auth.us-east-1.amazoncognito.com';
 const clientId = '45njbimqh80bs86kmgn4d0kc34';
 const redirectUrl = window.location.origin + window.location.pathname;
-const authorizationUrl = `https://${authFQDN}/oauth2/authorize?client_id=${clientId}&redirect_uri=${redirectUrl}&response_type=token&state=STATE`;
+const authorizationUrl = `https://${authFQDN}/oauth2/authorize?client_id=${clientId}&redirect_uri=${redirectUrl}&response_type=token`;
 
 if (idToken === null) {
     window.location.href = authorizationUrl;
