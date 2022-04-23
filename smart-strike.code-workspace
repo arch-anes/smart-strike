@@ -11,10 +11,6 @@
         {
             "name": "Embedded",
             "path": "embedded"
-        },
-        {
-            "name": "Server",
-            "path": "server"
         }
     ],
     "settings": {
