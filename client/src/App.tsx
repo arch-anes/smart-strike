@@ -30,7 +30,10 @@ const tryOpenDoor = async () =>
       },
     )
     .then(() => true)
-    .catch(() => false);
+    .catch((response) => {
+      console.error(response);
+      return false;
+    });
 
 const App = () => {
   const [active, setActive] = useState(false);
