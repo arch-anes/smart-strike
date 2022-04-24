@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/smart-strike/static/css/main.8e3569e8.css",
-    "main.js": "/smart-strike/static/js/main.806b591d.js",
+    "main.js": "/smart-strike/static/js/main.bbb1e029.js",
     "static/js/787.f0628018.chunk.js": "/smart-strike/static/js/787.f0628018.chunk.js",
     "index.html": "/smart-strike/index.html",
     "main.8e3569e8.css.map": "/smart-strike/static/css/main.8e3569e8.css.map",
-    "main.806b591d.js.map": "/smart-strike/static/js/main.806b591d.js.map",
+    "main.bbb1e029.js.map": "/smart-strike/static/js/main.bbb1e029.js.map",
     "787.f0628018.chunk.js.map": "/smart-strike/static/js/787.f0628018.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.8e3569e8.css",
-    "static/js/main.806b591d.js"
+    "static/js/main.bbb1e029.js"
   ]
 }
